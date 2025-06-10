@@ -1,4 +1,3 @@
-# aws-minecraft-automation
 # Automated AWS Minecraft Server Deployment
 
 This project automates the provisioning and configuration of a Minecraft server on an AWS EC2 instance. It uses **Terraform** for infrastructure provisioning and **Ansible** for server configuration.
