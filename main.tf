@@ -56,7 +56,7 @@ resource "aws_instance" "minecraft_server" {
   tags = {
     Name = "Minecraft_Server"
   }
-  
+
   connection {
     type        = "ssh"
     user        = "ubuntu"
@@ -66,7 +66,7 @@ resource "aws_instance" "minecraft_server" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      ansible-playbook -i "${self.public_ip}," \
+      sleep 30; ansible-playbook -i "${self.public_ip}," \
       --user ubuntu \
       --private-key ${var.private_key_path} \
       --ssh-common-args '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' \
