@@ -1,0 +1,62 @@
+---
+- name: Configure Minecraft Server
+  hosts: all
+  become: true # Run tasks with sudo
+  tasks:
+    - name: Wait for SSH to come up
+      wait_for_connection:
+        timeout: 120
+        delay: 10
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      ansible.builtin.apt:
+        name:
+          - openjdk-17-jre-headless
+          - screen
+        state: present
+
+    - name: Create the Minecraft server directory
+      ansible.builtin.file:
+        path: /opt/minecraft
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: Download the Minecraft server jar
+      ansible.builtin.get_url:
+        url: "https://piston-data.mojang.com/v1/objects/1fa26863db6c434254c356beca157773295c276f/server.jar"
+        dest: /opt/minecraft/server.jar
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    - name: Agree to the Minecraft EULA
+      ansible.builtin.copy:
+        content: "eula=true"
+        dest: /opt/minecraft/eula.txt
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    - name: Create and configure the minecraft systemd service
+      ansible.builtin.template:
+        src: templates/minecraft.service.j2
+        dest: /etc/systemd/system/minecraft.service
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload and start Minecraft service
+
+  handlers:
+    - name: Reload and start Minecraft service
+      ansible.builtin.systemd:
+        name: minecraft
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
