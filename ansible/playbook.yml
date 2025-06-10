@@ -30,7 +30,7 @@
 
     - name: Download the Minecraft server jar
       ansible.builtin.get_url:
-        url: "https://piston-data.mojang.com/v1/objects/1fa26863db6c434254c356beca157773295c276f/server.jar"
+        url: "https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar"
         dest: /opt/minecraft/server.jar
         owner: ubuntu
         group: ubuntu
