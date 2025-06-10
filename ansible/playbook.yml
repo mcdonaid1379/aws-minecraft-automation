@@ -1,7 +1,7 @@
 ---
 - name: Configure Minecraft Server
   hosts: all
-  become: true # Run tasks with sudo
+  become: true
   tasks:
     - name: Wait for SSH to come up
       wait_for_connection:
