@@ -2,17 +2,18 @@
 Description=Minecraft Server
 Wants=network-online.target
 After=network-online.target
+RequiresMountsFor=/home/ubuntu/MinecraftServer
 
 [Service]
 Type=simple
-User=ubuntu
-Group=ubuntu
+User=ubuntu 
+Group=ubuntu 
 WorkingDirectory=/home/ubuntu/MinecraftServer 
 
 ExecStart=/usr/bin/java -Xmx1024M -Xms1024M -jar server.jar nogui 
 
-Restart=on-failure 
-RestartSec=10s 
+Restart=on-failure
+RestartSec=10s
 
 [Install]
 WantedBy=multi-user.target 
