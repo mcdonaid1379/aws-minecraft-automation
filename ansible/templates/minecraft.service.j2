@@ -4,19 +4,15 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=forking
+Type=simple
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/opt/minecraft
+WorkingDirectory=/home/ubuntu/MinecraftServer 
 
-# Use screen to run the server in a detached session
-ExecStart=/usr/bin/screen -S mcs -d -m /usr/bin/java -Xms1024M -Xmx2048M -jar server.jar nogui
+ExecStart=/usr/bin/java -Xmx1024M -Xms1024M -jar server.jar nogui 
 
-# Gracefully stop the server by sending the 'stop' command to the screen session
-ExecStop=/usr/bin/screen -p 0 -S mcs -X eval 'stuff "stop"\015'
-
-Restart=on-failure
-RestartSec=10s
+Restart=on-failure 
+RestartSec=10s 
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target 
